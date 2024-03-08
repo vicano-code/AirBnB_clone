@@ -16,7 +16,7 @@ class HBNBCommand(cmd.Cmd):
     -Accepts commands via interactive mode & non-interactive mode
     """
     prompt = "(hbnb) "
-    classes = ["BaseModel"]
+    classes = {"BaseModel"}
 
     def emptyline(self):
         '''overide default of running last command when prompt cmd is empty'''
@@ -36,7 +36,7 @@ class HBNBCommand(cmd.Cmd):
         Creates a new instance of BaseModel, saves it (to the JSON file)
         and prints the id. Ex: $ create BaseModel
         '''
-        if line == "" :
+        if line == "":
             print("** class name missing **")
         elif line not in HBNBCommand.classes:
             print("** class doesn't exist **")
@@ -129,11 +129,11 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 obj_key = "{}.{}".format(args[0], args[1])
-                cast = type(eval(args[3]))
+                '''cast = type(eval(args[3]))'''
                 arg3 = args[3]
                 arg3 = arg3.strip('"')
                 arg3 = arg3.strip("'")
-                setattr(storage.all()[obj_key], args[2], cast(arg3))
+                setattr(storage.all()[obj_key], args[2], arg3)
                 storage.all()[obj_key].save()
 
 

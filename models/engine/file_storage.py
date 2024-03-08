@@ -16,6 +16,7 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+    class_dic = {"BaseModel": BaseModel}
 
     def all(self):
         """returns the dictionary __objects"""
@@ -47,6 +48,7 @@ class FileStorage:
             with open(self.__file_path, "r") as json_file:
                 json_obj = json.load(json_file)
             for key, obj in json_obj.items():
+                obj = self.class_dic[obj['__class__']](**obj)
                 self.__objects[key] = obj
         except FileNotFoundError:
             pass

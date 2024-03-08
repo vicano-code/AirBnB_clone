@@ -12,10 +12,10 @@ class User(BaseModel):
     defines all attributes of a user
 
     Public class attributes:
-    - email
-    - password
-    - first_name
-    - last_name
+        - email
+        - password
+        - first_name
+        - last_name
     '''
     email = ""
     password = ""

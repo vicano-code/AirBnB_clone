@@ -5,9 +5,15 @@
 
 import cmd
 import sys
+import shlex
 from models import storage
 from models.base_model import BaseModel
-import shlex
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -16,7 +22,8 @@ class HBNBCommand(cmd.Cmd):
     -Accepts commands via interactive mode & non-interactive mode
     """
     prompt = "(hbnb) "
-    classes = {"BaseModel"}
+    classes = {"BaseModel", "User", "State", "City", "Amenity", "Place",
+               "Review"}
 
     def emptyline(self):
         '''overide default of running last command when prompt cmd is empty'''

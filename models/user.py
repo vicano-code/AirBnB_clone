@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module - User (class)
+Module - User class
 
 -Inherits from BaseModel
 """

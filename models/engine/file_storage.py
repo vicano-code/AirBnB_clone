@@ -23,8 +23,8 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
     class_dic = {"BaseModel": BaseModel, "User": User, "State": State,
-                 "City": City, "Amenity": Amenity, "Place": Place,
-                 "Review": Review}
+            "City": City, "Amenity": Amenity, "Place": Place,
+            "Review": Review}
 
     def all(self):
         """returns the dictionary __objects"""
@@ -40,10 +40,10 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         obj_dict = {}
         for key, obj in self.__objects.items():
-            if type(obj) is dict:
-                obj_dict[key] = obj
-            else:
+            try:
                 obj_dict[key] = obj.to_dict()
+            except AttributeError:
+                obj_dict[key] = obj.___dict__
         with open(self.__file_path, mode="w", encoding="utf-8") as json_file:
             json.dump(obj_dict, json_file)
 
@@ -55,8 +55,10 @@ class FileStorage:
         try:
             with open(self.__file_path, "r") as json_file:
                 json_obj = json.load(json_file)
-            for key, obj in json_obj.items():
-                obj = self.class_dic[obj['__class__']](**obj)
-                self.__objects[key] = str(obj)
+            for key, obj_data in json_obj.items():
+                class_name = obj_data["__class__"]
+                del obj_data["__class__"]
+                obj = self.class_dic[class_name](**obj_data)
+                self.__objects[key] = obj
         except FileNotFoundError:
             pass

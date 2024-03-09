@@ -6,6 +6,7 @@
 import cmd
 import sys
 import shlex
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -23,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
     classes = {"BaseModel", "User", "State", "City", "Amenity", "Place",
-            "Review"}
+               "Review"}
 
     def emptyline(self):
         '''overide default of running last command when prompt cmd is empty'''
@@ -43,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         Creates a new instance of BaseModel, saves it (to the JSON file)
         and prints the id. Ex: $ create BaseModel
         '''
-        if line == "":
+        if len(line) == 0:
             print("** class name missing **")
         elif line not in HBNBCommand.classes:
             print("** class doesn't exist **")
@@ -142,6 +143,26 @@ class HBNBCommand(cmd.Cmd):
                 arg3 = arg3.strip("'")
                 setattr(storage.all()[obj_key], args[2], arg3)
                 storage.all()[obj_key].save()
+
+    def default(self, line):
+        '''retrieve all instances of a class using <class name>.all()'''
+        match = re.search(r"all()", line)
+        if match:
+            for cls_name in self.classes:
+                if line == "{}.all()".format(cls_name):
+                    self.do_all(cls_name)
+                    return
+
+        '''retrieve # of instances of a class using <class name>.count()'''
+        match = re.search(r"count()", line)
+        if match:
+            cls_name = line.split('.')[0]
+            if cls_name in HBNBCommand.classes:
+                obj_count = 0
+                for key in storage.all().keys():
+                    if cls_name in key:
+                        obj_count += 1
+                print("{}".format(obj_count))
 
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         obj_dict = {}
         for key, obj in self.__objects.items():
-            if (type(obj) == dict):
+            if type(obj) is dict:
                 obj_dict[key] = obj
             else:
                 obj_dict[key] = obj.to_dict()
@@ -57,6 +57,6 @@ class FileStorage:
                 json_obj = json.load(json_file)
             for key, obj in json_obj.items():
                 obj = self.class_dic[obj['__class__']](**obj)
-                self.__objects[key] = obj
+                self.__objects[key] = str(obj)
         except FileNotFoundError:
             pass

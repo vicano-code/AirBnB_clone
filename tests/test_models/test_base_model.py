@@ -58,7 +58,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str(self):
         """
-        Test the __str__ method to ensure it returns the expected string format.
+        Test the __str__ method to ensure it returns expected string format.
         """
         expected_str = "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__)
         self.assertEqual(str(self.base_model), expected_str)
@@ -72,7 +72,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_no_dunder(self):
         """
-        Test if the dictionary returned by to_dict() does not contain any dunder attributes.
+        Test if the dictionary returned by to_dict()
+        does not contain any dunder attributes.
         """
         dunder = self.base_model.__dict__
         for attr in dunder.keys():
@@ -80,14 +81,16 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_class(self):
         """
-        Test if the __class__ key is present in the dictionary returned by to_dict().
+        Test if the __class__ key is present in the dictionary returned
+        by to_dict().
         """
         test_dict = self.base_model.to_dict()
         self.assertIn("__class__", test_dict)
 
     def test_to_dict_custom_attribute(self):
         """
-        Test if custom attributes added to the BaseModel instance are included in the dictionary returned by to_dict().
+        Test if custom attributes added to the BaseModel instance
+        are included in the dictionary returned by to_dict().
         """
         self.base_model.custom_attribute = "test"
         base_dict = self.base_model.to_dict()
@@ -95,26 +98,30 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_updated_at_type(self):
         """
-        Test if the updated_at attribute in the dictionary returned by to_dict() is a string.
+        Test if the updated_at attribute in the dictionary returned
+        by to_dict() is a string.
         """
         base_dict = self.base_model.to_dict()
         self.assertIsInstance(base_dict["updated_at"], str)
 
     def test_to_dict_created_at(self):
         """
-        Test if the created_at attribute in the dictionary returned by to_dict() is a string.
+        Test if the created_at attribute in the dictionary returned
+        by to_dict() is a string.
         """
         base_dict = self.base_model.to_dict()
         self.assertIsInstance(base_dict["created_at"], str)
 
     def test_save_updated_at_type(self):
         """
-        Test if the updated_at attribute after calling save() is an instance of datetime.
+        Test if the updated_at attribute after calling save()
+        is an instance of datetime.
         """
         initial_updated_at = self.base_model.updated_at
         self.base_model.save()
         self.assertIsInstance(self.base_model.updated_at, datetime)
         self.assertNotEqual(str(initial_updated_at), str(self.base_model.updated_at))
+
 
 if __name__ == "__main__":
     unittest.main()

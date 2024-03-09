@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
     classes = {"BaseModel", "User", "State", "City", "Amenity", "Place",
-               "Review"}
+            "Review"}
 
     def emptyline(self):
         '''overide default of running last command when prompt cmd is empty'''

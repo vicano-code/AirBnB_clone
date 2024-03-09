@@ -57,6 +57,6 @@ class FileStorage:
                 json_obj = json.load(json_file)
             for key, obj in json_obj.items():
                 obj = self.class_dic[obj['__class__']](**obj)
-                self.__objects[key] = str(obj)
+                self.__objects[key] = obj
         except FileNotFoundError:
             pass

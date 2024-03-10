@@ -60,7 +60,8 @@ class TestBaseModel(unittest.TestCase):
         """
         Test the __str__ method to ensure it returns expected string format.
         """
-        expected_str = "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__)
+        expected_str = "[BaseModel] ({}) {}".format(self.base_model.id,
+                                                    self.base_model.__dict__)
         self.assertEqual(str(self.base_model), expected_str)
 
     def test_to_dict_return(self):
@@ -120,7 +121,8 @@ class TestBaseModel(unittest.TestCase):
         initial_updated_at = self.base_model.updated_at
         self.base_model.save()
         self.assertIsInstance(self.base_model.updated_at, datetime)
-        self.assertNotEqual(str(initial_updated_at), str(self.base_model.updated_at))
+        self.assertNotEqual(str(initial_updated_at),
+                            str(self.base_model.updated_at))
 
 
 if __name__ == "__main__":

@@ -23,8 +23,8 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
     class_dic = {"BaseModel": BaseModel, "User": User, "State": State,
-                 "City": City, "Amenity": Amenity, "Place": Place,
-                 "Review": Review}
+            "City": City, "Amenity": Amenity, "Place": Place,
+            "Review": Review}
 
     def all(self):
         """returns the dictionary __objects"""
@@ -40,10 +40,10 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         obj_dict = {}
         for key, obj in self.__objects.items():
-            if type(obj) is dict:
-                obj_dict[key] = obj
-            else:
+            try:
                 obj_dict[key] = obj.to_dict()
+            except AttributeError:
+                obj_dict[key] = obj.___dict__
         with open(self.__file_path, mode="w", encoding="utf-8") as json_file:
             json.dump(obj_dict, json_file)
 

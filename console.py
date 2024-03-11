@@ -22,9 +22,10 @@ class HBNBCommand(cmd.Cmd):
     -Command interpreter for the AirBnB console
     -Accepts commands via interactive mode & non-interactive mode
     """
+
     prompt = "(hbnb) "
     classes = {"BaseModel", "User", "State", "City", "Amenity", "Place",
-               "Review"}
+            "Review"}
 
     def emptyline(self):
         '''overide default of running last command when prompt cmd is empty'''
@@ -138,15 +139,13 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj_key = "{}.{}".format(args[0], args[1])
                 '''cast = type(eval(args[3]))'''
-                arg3 = args[3]
-                arg3 = arg3.strip('"')
-                arg3 = arg3.strip("'")
+                arg3 = arg[3].strip('"').strip("'")
                 setattr(storage.all()[obj_key], args[2], arg3)
                 storage.all()[obj_key].save()
 
     def default(self, line):
         '''retrieve all instances of a class using <class name>.all()'''
-        match = re.search(r"all()", line)
+        match = re.search(r"all\(\)", line)
         if match:
             for cls_name in self.classes:
                 if line == "{}.all()".format(cls_name):
@@ -154,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
                     return
 
         '''retrieve # of instances of a class using <class name>.count()'''
-        match = re.search(r"count()", line)
+        match = re.search(r"count\(\)", line)
         if match:
             cls_name = line.split('.')[0]
             if cls_name in HBNBCommand.classes:
@@ -193,4 +192,7 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if len(sys.argv) > 1:
+        HBNBCommand().onecmd(' '.join(sys.argv[1:]))
+    else:
+        HBNBCommand().cmdloop()

@@ -162,6 +162,33 @@ class HBNBCommand(cmd.Cmd):
                     if cls_name in key:
                         obj_count += 1
                 print("{}".format(obj_count))
+                return
+
+        line_list = line.split('.')
+        cls_name = line_list[0]
+        obj_id = line_list[1].split('(')[1].split(')')[0]
+        '''retrieve an instance based on its ID: <class name>.show(<id>)'''
+        if line == "{}.show({})".format(cls_name, obj_id):
+            line = "{} {}".format(cls_name, obj_id)
+            self.do_show(line)
+            return
+        '''destroy an instance based on his ID: <class name>.destroy(<id>)'''
+        if line == "{}.destroy({})".format(cls_name, obj_id):
+            line = "{} {}".format(cls_name, obj_id)
+            self.do_destroy(line)
+            return
+        '''
+        obj_id = line_list[1].split('(')[1].split(',')[0]
+        attr_name = line_list[1].split('(')[1].split(',')[1].split(',')[0]
+        attr_val = line_list[1].split('(')[1].split(',')[1].split(',')[1]
+        print(obj_id, attr_name)
+        if line == "{}.update({}, {}, {})".format(cls_name, obj_id,
+                                                  attr_name, attr_val):
+            line = "{} {} {} {}".format(cls_name, obj_id,
+                                        attr_name, attr_val)
+            self.do_update(line)
+            return
+        '''
 
 
 if __name__ == '__main__':

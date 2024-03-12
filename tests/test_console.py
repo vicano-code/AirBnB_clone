@@ -32,7 +32,7 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_create(self):
         h = ("Usage: create <class>\n        "
-                "Create a new instance of a class and print its id.")
+             "Create a new instance of a class and print its id.")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(h, output.getvalue().strip())
@@ -45,20 +45,21 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_destroy(self):
         h = ("Usage: destroy <class> <id>\n        "
-                "Deletes an instance based on the class name and id.")
+             "Deletes an instance based on the class name and id.")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help destroy"))
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_all(self):
         h = ("Usage: all [class]\n        "
-                "Prints all string representations of all instances.")
+             "Prints all string representations of all instances.")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help all"))
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_update(self):
-        h = ("Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).\n"
+        h = ("Updates an instance based on the class name and id by adding or\
+             updating attribute (save the change into the JSON file).\n"
              "Ex: $ update BaseModel 1234-1234-1234 email \"aibnb@mail.com\"")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
@@ -66,7 +67,10 @@ class TestHBNBCommand_help(unittest.TestCase):
 
 
 class TestHBNBCommand_operations(unittest.TestCase):
-    """Unittests for testing command operations of the HBNB command interpreter."""
+    """
+    Unittests for testing command operations of the
+    HBNB command interpreter.
+    """
 
     def test_create(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -75,13 +79,17 @@ class TestHBNBCommand_operations(unittest.TestCase):
 
     def test_show(self):
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("show BaseModel 1234-1234-1234"))
-            self.assertEqual("** no instance found **", output.getvalue().strip())
+            self.assertFalse(HBNBCommand().onecmd
+                             ("show BaseModel 1234-1234-1234"))
+            self.assertEqual("** no instance found **",
+                             output.getvalue().strip())
 
     def test_destroy(self):
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 1234-1234-1234"))
-            self.assertEqual("** no instance found **", output.getvalue().strip())
+            self.assertFalse(HBNBCommand().onecmd
+                             ("destroy BaseModel 1234-1234-1234"))
+            self.assertEqual("** no instance found **",
+                             output.getvalue().strip())
 
     def test_all(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -90,8 +98,10 @@ class TestHBNBCommand_operations(unittest.TestCase):
 
     def test_update(self):
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("update BaseModel 1234-1234-1234 name 'new_name'"))
-            self.assertEqual("** no instance found **", output.getvalue().strip())
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel
+                             1234-1234-1234 name 'new_name'"))
+            self.assertEqual("** no instance found **",
+                             output.getvalue().strip())
 
 
 if __name__ == "__main__":

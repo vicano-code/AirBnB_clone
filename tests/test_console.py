@@ -58,8 +58,8 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_update(self):
-        h = ("Usage: update <class> <id> <attribute> <value>\n        "
-                "Updates an instance based on the class name and id.")
+        h = ("Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).\n"
+             "Ex: $ update BaseModel 1234-1234-1234 email \"aibnb@mail.com\"")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(h, output.getvalue().strip())

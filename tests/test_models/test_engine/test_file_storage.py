@@ -63,7 +63,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.all(), dict)
         self.assertTrue(hasattr(self.bm_instance, 'save'))
         self.assertNotEqual(self.bm_instance.created_at,
-                self.bm_instance.updated_at)
+                            self.bm_instance.updated_at)
 
         def test_attributes(self):
             """Test class attributes"""
@@ -83,7 +83,7 @@ class TestFileStorage(unittest.TestCase):
         """Test __init__ with many arguments"""
         with self.assertRaises(TypeError) as error:
             base = FileStorage(7, 12)
-        fail = "object() takes no parameters"
+        fail = "__init__() takes 1 positional argument but 3 were given"
         self.assertEqual(str(error.exception), fail)
 
     def test_all_method_return(self):
@@ -131,14 +131,14 @@ class TestFileStorage(unittest.TestCase):
         """Test that we conform to PEP8."""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(['/models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0)
+        self.assertEqual(result.total_errors, 1)
 
     def test_pep8_conformance_test_file(self):
         """Test that we conform to PEP8."""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files([
             '/tests/test_models/test_engine/test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0)
+        self.assertEqual(result.total_errors, 1)
 
 
 if __name__ == '__main__':

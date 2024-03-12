@@ -137,11 +137,15 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 obj_key = "{}.{}".format(args[0], args[1])
-                '''cast = type(eval(args[3]))'''
-                arg3 = args[3]
-                arg3 = arg3.strip('"')
-                arg3 = arg3.strip("'")
-                setattr(storage.all()[obj_key], args[2], arg3)
+                pattern1 = r'^\d+$'
+                pattern2 = re.compile(r'^[-+]?(\d+(\.\d*)?|\.\d+)\
+                        ([eE][-+]?\d+)?$')
+                if re.match(pattern1, args[3]):
+                    args[3] = int(args[3])
+                elif pattern2.match(args[3]):
+                    args[3] = float(args[3])
+
+                setattr(storage.all()[obj_key], args[2], args[3])
                 storage.all()[obj_key].save()
 
     def default(self, line):
@@ -178,18 +182,47 @@ class HBNBCommand(cmd.Cmd):
             line = "{} {}".format(cls_name, obj_id)
             self.do_destroy(line)
             return
+
         '''
-        obj_id = line_list[1].split('(')[1].split(',')[0]
-        attr_name = line_list[1].split('(')[1].split(',')[1].split(',')[0]
-        attr_val = line_list[1].split('(')[1].split(',')[1].split(',')[1]
-        print(obj_id, attr_name)
-        if line == "{}.update({}, {}, {})".format(cls_name, obj_id,
-                                                  attr_name, attr_val):
-            line = "{} {} {} {}".format(cls_name, obj_id,
-                                        attr_name, attr_val)
-            self.do_update(line)
+        update an instance based on his ID:
+        <class name>.update(<id>, <attribute name>, <attribute value>)
+        eg. User.update("2993..", "first_name", "John")
+        '''
+        match = re.search(r".update()", line)
+        if match:
+            for i in range(len(line)):
+                if line[i] == '(':
+                    idx1 = i
+                elif line[i] == ')':
+                    idx2 = i
+            arg_str = line[idx1+1:idx2]
+            arg_list = arg_str.split(', ')
+            obj_id = arg_list[0]
+            '''check if attribute is in dict
+            <class name>.update(<id>, <dictionary representation>)
+            eg. User.update("38f22813-2753-4d42-b37c-57a17f1e4f88",\
+                    {'first_name': "John", "age": 89})
+            '''
+            match1 = re.search(r"{", line)
+            if not match1:
+                attr_name = arg_list[1]
+                attr_val = arg_list[2]
+                line = "{} {} {} {}".format(cls_name, obj_id,
+                                            attr_name, attr_val)
+                self.do_update(line)
+            else:
+                for j in range(len(arg_str)):
+                    if arg_str[j] == '{':
+                        j1 = j
+                    elif arg_str[j] == '}':
+                        j2 = j
+                attr = arg_str[j1:j2+1]
+                attr_dict = eval(attr)
+                for attr_name, attr_val in attr_dict.items():
+                    line = "{} {} {} {}".format(cls_name, obj_id,
+                                                attr_name, attr_val)
+                    self.do_update(line)
             return
-        '''
 
 
 if __name__ == '__main__':

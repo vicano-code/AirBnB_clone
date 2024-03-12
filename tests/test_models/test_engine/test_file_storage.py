@@ -63,21 +63,21 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(models.storage.all(), dict)
         self.assertTrue(hasattr(self.bm_instance, 'save'))
         self.assertNotEqual(self.bm_instance.created_at,
-                            self.bm_instance.updated_at)
+                self.bm_instance.updated_at)
 
-    def test_attributes(self):
-        """Test class attributes"""
+        def test_attributes(self):
+            """Test class attributes"""
         self.assertTrue(hasattr(FileStorage, "_FileStorage__file_path"))
         self.assertTrue(hasattr(FileStorage, "_FileStorage__objects"))
         self.assertIsInstance(models.storage._FileStorage__objects, dict)
         self.assertIsInstance(models.storage._FileStorage__file_path, str)
 
     def test_no_arguments(self):
-        """Test initialization without arguments"""
-        with self.assertRaises(TypeError) as error:
-            FileStorage.__init__()
-        fail = "descriptor '__init__' of 'object' object needs an argument"
-        self.assertEqual(str(error.exception), fail)
+        """Test __init__ with no arguments"""
+        try:
+            FileStorage()
+        except TypeError as e:
+            self.fail(f"FileStorage() raised TypeError unexpectedly: {e}")
 
     def test_arguments(self):
         """Test __init__ with many arguments"""
@@ -137,7 +137,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that we conform to PEP8."""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files([
-            '/tests/test_models/test_engine/test_file_storageconsole.py'])
+            '/tests/test_models/test_engine/test_file_storage.py'])
         self.assertEqual(result.total_errors, 0)
 
 

@@ -73,16 +73,44 @@ class TestHBNBCommand_operations(unittest.TestCase):
     """
 
     def test_create(self):
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("create")
+            self.assertEqual("** class name missing **\n",
+                             output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("create NotAClass")
+            self.assertEqual("** class doesn't exist **\n",
+                             output.getvalue())
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            self.typing.onecmd("create BaseModel")
             self.assertTrue(len(output.getvalue().strip()) > 0)
 
     def test_show(self):
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("show")
+            self.assertEqual("** class name missing **\n",
+                             output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("show User")
+            self.assertEqual("** instance id missing **\n",
+                             output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("User.show()")
+            self.assertEqual("** instance id missing **\n",
+                             output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("show User '999'")
+            self.assertEqual("** no instance found **\n",
+                             output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.typing.onecmd("BaseModel.show('999')")
+            self.assertEqual("** no instance found **\n",
+                             output.getvalue())
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd
-                             ("show BaseModel 1234-1234-1234"))
-            self.assertEqual("** no instance found **",
-                             output.getvalue().strip())
+            self.typing.onecmd("create BaseModel")
+            obj_id = output.getvaue()
+            self.typing.onecmd("show BaseModel obj_id")
+            self.assertTrue(len(output.getvalue().strip()) > 0)
 
     def test_destroy(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -98,7 +126,7 @@ class TestHBNBCommand_operations(unittest.TestCase):
 
     def test_update(self):
         with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("update BaseModel
+            self.assertFalse(HBNBCommand().onecmd("update BaseModel\
                              1234-1234-1234 name 'new_name'"))
             self.assertEqual("** no instance found **",
                              output.getvalue().strip())

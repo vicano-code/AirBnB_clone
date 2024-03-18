@@ -59,7 +59,7 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_update(self):
         h = ("Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).\n"
-             "Ex: $ update BaseModel 1234-1234-1234 email \"aibnb@mail.com\"")
+            "Ex: $ update BaseModel 1234-1234-1234 email \"aibnb@mail.com\"")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(h, output.getvalue().strip())
@@ -92,6 +92,14 @@ class TestHBNBCommand_operations(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("update BaseModel 1234-1234-1234 name 'new_name'"))
             self.assertEqual("** no instance found **", output.getvalue().strip())
+
+    def test_quit_exits(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertTrue(HBNBCommand().onecmd("quit"))
+
+    def test_EOF_exits(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertTrue(HBNBCommand().onecmd('^D'))
 
 
 if __name__ == "__main__":

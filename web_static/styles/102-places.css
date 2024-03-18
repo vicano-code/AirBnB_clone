@@ -136,7 +136,7 @@ div.reviews>p {
         align-items: center;
         height: auto;
         margin: 30px auto;
-        padding: auto;
+        padding: 10px 10px;
     }
     .max_guest,
     .number_rooms,

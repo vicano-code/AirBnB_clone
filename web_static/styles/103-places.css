@@ -20,9 +20,13 @@ article {
     border: 1px solid #FF5A5F;
     border-radius: 4px;
 }
+.apartment_title {
+    display: flex;
+}
 article h2 {
     font-size: 30px;
     text-align: center;
+    flex: 5
 }
 .price_by_night {
     color: #FF5A5F;
@@ -32,26 +36,32 @@ article h2 {
     min-width: 60px;
     font-size: 30px;
     line-height: 60px;
-    position: relative;
-    float: right;
-    top: -80px;
     text-align: center;
+    flex: 1;
+    padding: 5px
 }
 .information {
     height: 80px;
     border-top: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.information>h3 {
+    font-weight: 100;
+    font-size: small;
+    text-align: center;
 }
 .max_guest,
 .number_rooms,
 .number_bathrooms {
     width: 100px;
     background-repeat: no-repeat;
-    background-position: 100% 6px;
-    display: inline-block;
+    background-position: 50% 4px;
     line-height: 120px;
-    text-align: right;
     margin: auto;
 }
 .max_guest {
@@ -69,6 +79,7 @@ article h2 {
 }
 .description {
     text-align: left;
+    font-weight: 100;
 }
 div.amenitiez {
     margin-top: 40px;
@@ -132,18 +143,6 @@ div.reviews>p {
     }
     article h2 {
         font-size: 26px;
-    }
-    .information {
-        display: flex;
-        align-items: center;
-        height: auto;
-        margin: 30px auto;
-        padding: 10px 10px;
-    }
-    .max_guest,
-    .number_rooms,
-    .number_bathrooms {
-      background-position: 100% 10px;
     }
     div.user {
         margin-bottom: 10px;
